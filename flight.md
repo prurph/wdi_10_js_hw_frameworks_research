@@ -112,7 +112,8 @@ As you can guess from the .coffee above--if you're using Flight in Rails it's
 easy to build your components in CoffeeScript!
 
 ### Famous(?) Flights
-The highest-profile example of Flight usage in the wild is [TweetDeck]
-(https://about.twitter.com/products/tweetdeck). Although not built from the
-ground up with Flight, TweetDeck has since switched over to Flight. Time will
-tell if this relatively new framework--wait for it--takes flight!
+The highest-profile example of flight usage in the wild is for Twitter's web
+apps, in particular [TweetDeck](https://about.twitter.com/products/tweetdeck).
+Although not built from the ground up with Flight, TweetDeck has since switched
+over to Flight. Time will tell if this relatively new framework--wait for it--
+takes flight beyond the Twitterverse.
