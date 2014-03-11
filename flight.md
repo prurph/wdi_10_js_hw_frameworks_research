@@ -2,11 +2,13 @@
 
 ### Flight's alright.
 Flight is a lightweight JS framework that defines "components" and maps them to
-DOM nodes. It maps its functionality directly to DOM nodes, not unlike how
-Angular uses DOM-based templating. Rather than communicating directly,
-components cannot be referenced by other components, nor do they become global
-properties. Instead Flight's components use plain old HTML DOM actions,
-subscribed to by other components, to communicate with one another.
+DOM nodes. Although mapping components to DOM nodes is not conceptually entirely
+unlike Angular's DOM-based templating, in practice instead of directives in the
+HTML, Flight components are bound in the .js file with the `attachTo` method.
+Rather than communicating directly, components cannot be referenced by other
+components, nor do they become global properties. Instead Flight's components
+use plain old HTML DOM actions, subscribed to by other components, to
+communicate with one another.
 
 Flight's creators boast that this makes components "highly portable and easily
 testable", since each is completely independent of one another. Testing support
@@ -19,33 +21,33 @@ allows incorporation of additional components as necessary. External routers
 that have been used with Flight include: [Flatiron
 Director](https://github.com/flatiron/director),
 [Crossroads](http://millermedeiros.github.io/crossroads.js/) and the
-[Backbone.js router](http://backbonejs.org/). Overall if you need fully robust
-MV-x functionality, it might be better to look elsewhere.
+[Backbone.js router](http://backbonejs.org/).
 
 ### What's a component?
 A component is just a JS constructor with properties mixed into its prototype.
 All Flight components have basic functionality like event handling, and custom
-properties which describe its behavior. You can think of this as a model in a
-framework such as Angular, but unlike Angular, a Flight component cannot be
+properties which describe their behavior. You can think of them as a model in a
+framework such as Angular, but unlike Angular a Flight component cannot be
 referenced directly. It should not be confused with a factory or service in
 Angular since these are singletons, whereas instances of components are created
-by binding Flight components to DOM nodes (more on this shortly).
+by binding Flight components to DOM nodes (more on this shortly) but the
+component itself behaves as more of a constructor/prototype rolled into one.
 
-Writing a component is straightforward. The basic steps are:
+Writing a component is fairly straightforward. The basic steps are:
 
 -  Create a module using the `define` function that requires Flight's component
-module: `lib/component` The component module makes a function available,
+module: `lib/component`. The component module makes a function available,
 typically called `defineComponent`
 -  `defineComponent` accepts mixins/functions
 and returns a new component constructor with these mixins applied to its
 prototype.
--  Use `after()` and pass the name of a function (typically
-`initialize`) and a callback with event handlers to bind to the component when
-it is initialzed by binding it to a DOM element
+-  Use `after()` and pass the name of a function (typically `initialize`) and a
+callback with event handlers to bind to the component when it is initialzed by
+binding it to a DOM element.
 
-This is how this looks in practice:
+This is how it looks in "practice":
 
-    `define(function (require) {
+    define(function (require) {
       var defineComponent = require('flight/lib/component');
 
       // We then pass mixins or single functions to defineComponent
@@ -78,15 +80,15 @@ of `require` passed the component constructor and then attached to the DOM using
 `attachTo`. The argument to `attachTo` can be a DOM node, jQuery object, or CSS
 selector.
 
-    `define(function (require) {
-        var Component = require('componentName');
+    define(function (require) {
+      var Component = require('componentName');
 
-        // attachTo takes a selector and an optional options object
-        Component.attachTo('#main', {
-          'nextPage': '#nextPage'
-          'prevPage': '#prevPage'
-          });
-      });
+      // attachTo takes a selector and an optional options object
+      Component.attachTo('#main', {
+        'nextPage': '#nextPage'
+        'prevPage': '#prevPage'
+        });
+    });
 
 Note that this is quite different from Angular, where directives can be embedded
 directly into the HTML. With Flight, we use the attachTo method to sitck
@@ -106,10 +108,11 @@ require these in your manifest file as:
 
     `//= require_directory ./components`
 
-As you can guess from the .coffee above--if you're using Flight in Rails you're
-free to write in CoffeeScript!
+As you can guess from the .coffee above--if you're using Flight in Rails it's
+easy to build your components in CoffeeScript!
 
 ### Famous(?) Flights
-The highest-profile example of Flight usage in the wild is [TweetDeck](https://about.twitter.com/products/tweetdeck). Although not built from the ground up
-with Flight, TweetDeck has since switched over to Flight. Time will tell if this
-relatively new framework--wait for it--takes flight!
+The highest-profile example of Flight usage in the wild is [TweetDeck]
+(https://about.twitter.com/products/tweetdeck). Although not built from the
+ground up with Flight, TweetDeck has since switched over to Flight. Time will
+tell if this relatively new framework--wait for it--takes flight!
