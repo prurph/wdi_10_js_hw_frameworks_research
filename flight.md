@@ -11,9 +11,11 @@ use plain old HTML DOM actions, subscribed to by other components, to
 communicate with one another.
 
 Flight's creators boast that this makes components "highly portable and easily
-testable", since each is completely independent of one another. Testing support
-is offered for both Jasmine and Mocha, and Flight additionally offers mixins
-to extend the functionality of existing components.
+testable", since each is completely independent of one another. This decoupling
+allows someone to change a single compponent without fear that it will break
+something elsewhere. Testing support is offered for both Jasmine and Mocha, and
+Flight additionally offers mixins to extend the functionality of existing
+components.
 
 The framework strives to impose very little structure, and in fact Flight does
 not offer a router. In this sense Flight is not a "full" framework, rather it
@@ -26,12 +28,17 @@ Director](https://github.com/flatiron/director),
 ### What's a component?
 A component is just a JS constructor with properties mixed into its prototype.
 All Flight components have basic functionality like event handling, and custom
-properties which describe their behavior. You can think of them as a model in a
-framework such as Angular, but unlike Angular a Flight component cannot be
-referenced directly. It should not be confused with a factory or service in
-Angular since these are singletons, whereas instances of components are created
-by binding Flight components to DOM nodes (more on this shortly) but the
-component itself behaves as more of a constructor/prototype rolled into one.
+properties which describe their behavior. You can think of them just a little
+bit like a model in a framework such as Angular, but unlike Angular a Flight
+component cannot be referenced directly. It should not be confused with a
+factory or service in Angular since these are singletons, whereas instances of
+components are created by binding Flight components to DOM nodes (more on this
+shortly) but the component itself behaves as more of a constructor/prototype
+rolled into one. Instead of using a controller to talk to views and models,
+Flight's components ball up the attributes of models and the display
+functionality of views into a single entity. In this case changes in the "view"
+are effected by event-driven methods of a component which will change its
+corresponding DOM node somehow.
 
 Writing a component is fairly straightforward. The basic steps are:
 
@@ -96,7 +103,12 @@ components to things, at which point the component's functionality is completely
 set.
 
 Finally, once attached, component instances access their node object via `node`
-or the jQuery version `$node`.
+or the jQuery version `$node`. The component can:
+
+-  Manipulate the DOM node
+-  Trigger events on the DOM node (and thereby communicate with other nodes and
+  their components)
+-  Listen to events
 
 ### Rails takes Flight
 [FlightForRails](https://github.com/rezwyi/flight-for-rails) is a plugin that
